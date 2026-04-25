@@ -6,7 +6,6 @@ import Admin from "./Pages/Admin";
 import About from "./Pages/About";
 import Contact from "./Pages/contact";
 import "./Pages/Contact.css";
-import AddCake from "./Components/AddCake";
 import CakeList from "./Components/CakeList";
 import "./App.css";
 import { useState } from "react";
@@ -26,8 +25,7 @@ function App() {
       <Route path="/admin" element={<Admin />} />
       <Route path="/about" element={<About />} />
       <Route path="/contact"  element={<Contact />} />
-      <Route path="/addcakes" element={<AddCake addCake={addCake} />} />
-      <Route path="/cakes" element={<CakeList cakes={cakes} />} />
+    <Route path="/cakes" element={<CakeList cakes={cakes} />} />
     </Routes>
     </BrowserRouter>
 
