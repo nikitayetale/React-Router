@@ -5,11 +5,25 @@ function Login() {
     const [pass, setPass] = useState("");
 
     const handleLogin = () => {
-        if(user === "admin" && pass === "1234"){
-            alert("Login Successful");
-        } else {
-            alert("Invalid Credentials");
+
+        const data = [user,pass]
+        async function postCake() {
+            try {
+                const response = await fetch('http://localhost:3000/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                const result = await response.json();
+                console.log(result);
+                alert(result.message);
+            } catch (error) {
+                console.error('Error adding cake:', error);
+            }
         }
+        postCake();
     };
 
     return (

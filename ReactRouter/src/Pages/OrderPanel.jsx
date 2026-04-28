@@ -12,7 +12,7 @@ function Admin() {
 
         async function postCake() {
             try {
-                const response = await fetch('http://localhost:3000/cakes', {
+                const response = await fetch('http://localhost:3000/orders', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

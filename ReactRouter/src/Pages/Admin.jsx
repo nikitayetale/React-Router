@@ -1,43 +1,82 @@
-import React,{useState}from "react";
+import React, { useState } from "react";
 
-function Admin({addCake}){
-    const [cake,setCake] = useState({
-        name:"",
-        price:"",
-        image:""
-
+function Admin() {
+    const [cake, setCake] = useState({
+        name: "",
+        price: "",
+        image: ""
     });
 
-    const handleChange = (e) =>{
-setCake({...cake, [e.target.name]:e.target.value});
+    const handleChange = (e) => {
+        setCake({ ...cake, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) =>{
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        addCake(cake);
-        setCake({name:"",price:"",image:""});
+
+        try {
+            const response = await fetch('http://localhost:3000/cakes', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(cake)
+            });
+
+            const result = await response.json();
+            console.log(result);
+            alert(result.message);
+
+            // Clear form
+            setCake({ name: "", price: "", image: "" });
+
+        } catch (error) {
+            console.error('Error adding cake:', error);
+            alert("Error adding cake");
+        }
     };
 
-    return(
-        <div class="container">
+    return (
+        <div className="container">
             <h2>Admin Panel</h2>
 
             <form onSubmit={handleSubmit}>
 
-                <input type = "name" placeholder="Cake Name" value={cake.name} onChange={handleChange} require/>
-                
-                <br></br>
-                
-                <input type="number" name="price" placeholder="price" value={cake.price} onChange={handleChange} require/>
-                
-                <br></br>
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="Cake Name"
+                    value={cake.name}
+                    onChange={handleChange}
+                    required
+                />
 
-                <input type="txet" name="image" placeholder="Image Url" value={cake.image} onChange={handleChange} require/>
-                <br></br>
+                <br />
+
+                <input
+                    type="number"
+                    name="price"
+                    placeholder="Price"
+                    value={cake.price}
+                    onChange={handleChange}
+                    required
+                />
+
+                <br />
+
+                <input
+                    type="text"
+                    name="image"
+                    placeholder="Image URL"
+                    value={cake.image}
+                    onChange={handleChange}
+                    required
+                />
+
+                <br />
 
                 <button type="submit">Add Cake</button>
 
-        
             </form>
         </div>
     );
