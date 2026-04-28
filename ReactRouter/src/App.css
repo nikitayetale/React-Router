@@ -130,3 +130,28 @@ button {
   object-fit: cover;
 }
 
+form{
+  margin-top:20px;
+}
+
+input{
+  padding: 8px;
+  width:200px;
+}
+
+button{
+  padding: 10px;
+  background-color:pink;
+  color: white;
+}
+
+.container {
+  margin: 15% auto auto auto;
+  padding: 20px;
+  background: white;
+  width: 300px;
+  border-radius: 10px;
+
+}
+
+

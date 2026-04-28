@@ -1,74 +1,45 @@
-import { useState } from "react";
+import React,{useState}from "react";
 
-function Admin() {
-    const [name, setName] = useState("");
-    const [price, setPrice] = useState("");
-    const [image, setImage] = useState("");
-    const [flavor, setFlavor] = useState(""); 
+function Admin({addCake}){
+    const [cake,setCake] = useState({
+        name:"",
+        price:"",
+        image:""
 
-    const addCake = () => {
-        const newCake = { name, price, image, flavor };
-        console.log(newCake);
+    });
 
-        async function postCake() {
-            try {
-                const response = await fetch('http://localhost:3000/cakes', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(newCake)
-                });
-                const result = await response.json();
-                console.log(result);
-                alert(result.message);
-            } catch (error) {
-                console.error('Error adding cake:', error);
-            }
-        }
-
-        postCake();
-        alert("Cake Added (Check Console)");
+    const handleChange = (e) =>{
+setCake({...cake, [e.target.name]:e.target.value});
     };
 
-    return (
-        <>
-         <style>
-                {`
-                    .admin{
-                        text-align: center;
-                        margin: 250px;
-                    }
+    const handleSubmit = (e) =>{
+        e.preventDefault();
+        addCake(cake);
+        setCake({name:"",price:"",image:""});
+    };
 
-                `}
-            </style>
-        <div className="container">
-            <h2>Order Panel</h2>
+    return(
+        <div class="container">
+            <h2>Admin Panel</h2>
 
-            <input placeholder="Cake Name" onChange={(e)=> setName(e.target.value)} />
-            <br />
+            <form onSubmit={handleSubmit}>
 
-           <select value={flavor} onChange={(e) => setFlavor(e.target.value)}>
-        <option value="">Select Flavor</option>
-        <option value="chocolate">Chocolate</option>
-        <option value="vanilla">Vanilla</option>
-        <option value="strawberry">Strawberry</option>
-        <option value="butterscotch">Butterscotch</option>
+                <input type = "name" placeholder="Cake Name" value={cake.name} onChange={handleChange} require/>
+                
+                <br></br>
+                
+                <input type="number" name="price" placeholder="price" value={cake.price} onChange={handleChange} require/>
+                
+                <br></br>
+
+                <input type="txet" name="image" placeholder="Image Url" value={cake.image} onChange={handleChange} require/>
+                <br></br>
+
+                <button type="submit">Add Cake</button>
+
         
-
-      </select>
-
-            <br /> 
-            
-            <input placeholder="Price" onChange={(e)=> setPrice(e.target.value)} />
-            <br />
-
-            <input placeholder="Image URL" onChange={(e)=>setImage(e.target.value)} />
-            <br />
-
-            <button onClick={addCake}>Order Panel</button>
-             </div>
-             </>
+            </form>
+        </div>
     );
 }
 
